@@ -1,68 +1,53 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "eternalweb3.com" }],
-      "destination": "/gateway.html"
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "www.eternalweb3.com" }],
-      "destination": "/gateway.html"
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "hub.eternalweb3.com" }],
-      "destination": "/hub.html"
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "web3.eternalweb3.com" }],
-      "destination": "/web3.html"
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "footprints.eternalweb3.com" }],
-      "destination": "/footprints.html"
-    },
-    {
-      "source": "/hub",
-      "destination": "/hub.html"
-    },
-    {
-      "source": "/web3",
-      "destination": "/web3.html"
-    },
-    {
-      "source": "/footprints",
-      "destination": "/footprints.html"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/gateway.html",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/hub.html",
-      "has": [{ "type": "host", "value": "hub.eternalweb3.com" }],
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/web3.html",
-      "has": [{ "type": "host", "value": "web3.eternalweb3.com" }],
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/footprints.html",
-      "has": [{ "type": "host", "value": "footprints.eternalweb3.com" }],
-      "destination": "/",
-      "permanent": true
-    }
-  ]
+"cleanUrls": true,
+"trailingSlash": false,
+"rewrites": [
+{
+"source": "/",
+"has": [{ "type": "host", "value": "footprints.eternalweb3.com" }],
+"destination": "/footprints.html"
+},
+{
+"source": "/",
+"has": [{ "type": "host", "value": "hub.eternalweb3.com" }],
+"destination": "/hub.html"
+},
+{
+"source": "/",
+"has": [{ "type": "host", "value": "web3.eternalweb3.com" }],
+"destination": "/web3.html"
+},
+{
+"source": "/hub",
+"destination": "/hub.html"
+},
+{
+"source": "/web3",
+"destination": "/web3.html"
+},
+{
+"source": "/footprints",
+"destination": "/footprints.html"
+}
+],
+"redirects": [
+{
+"source": "/hub.html",
+"has": [{ "type": "host", "value": "hub.eternalweb3.com" }],
+"destination": "/",
+"permanent": true
+},
+{
+"source": "/web3.html",
+"has": [{ "type": "host", "value": "web3.eternalweb3.com" }],
+"destination": "/",
+"permanent": true
+},
+{
+"source": "/footprints.html",
+"has": [{ "type": "host", "value": "footprints.eternalweb3.com" }],
+"destination": "/",
+"permanent": true
+}
+]
 }
