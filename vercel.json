@@ -1,14 +1,15 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/",
       "has": [
         {
           "type": "host",
-          "value": "web3.eternalweb3.com"
+          "value": "footprints.eternalweb3.com"
         }
       ],
-      "destination": "/web3.html"
+      "destination": "/footprints.html"
     },
     {
       "source": "/",
@@ -25,22 +26,10 @@
       "has": [
         {
           "type": "host",
-          "value": "footprints.eternalweb3.com"
+          "value": "web3.eternalweb3.com"
         }
       ],
-      "destination": "/footprints.html"
-    },
-    {
-      "source": "/web3",
       "destination": "/web3.html"
-    },
-    {
-      "source": "/hub",
-      "destination": "/hub.html"
-    },
-    {
-      "source": "/footprints",
-      "destination": "/footprints.html"
     }
   ]
 }
