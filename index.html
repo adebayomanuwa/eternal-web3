@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="ready">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="£T€R₦AL W£₿3 ART ¢HRO₦ICL€$ ¢R£ATIO₦® — choose between £T€R₦AL Hub, W£₿3 Art Chronicles, and Footprints.">
+  <title>£T€R₦AL Gateway | Choose Your Portal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    @layer reset, tokens, base, layout, components, motion, utilities;
+
+    @layer reset {
+      *, *::before, *::after { box-sizing: border-box; }
+      * { margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body { min-height: 100svh; overflow-x: hidden; }
+      button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+      a { color: inherit; text-decoration: none; }
+      svg { display: block; max-width: 100%; }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    }
+
+    @layer tokens {
+      :root {
+        --font-display: "Space Grotesk", Inter, system-ui, sans-serif;
+        --font-body: Inter, system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+        --space-dark: #030305;
+        --space-void: #08080b;
+        --space-panel: #101017;
+        --text-primary: #f7f2ea;
+        --text-soft: #c7bfcd;
+        --text-muted: #8b8594;
+        --text-dim: #5f596b;
+        --brand-cyan: #00f0ff;
+        --brand-magenta: #ff2a8a;
+        --brand-gold: #d8b56d;
+        --brand-green: #00ff88;
+        --glass-border: rgba(255, 255, 255, 0.09);
+        --glass-border-strong: rgba(255, 255, 255, 0.18);
+        --glass-bg: rgba(255, 255, 255, 0.035);
+        --glass-bg-strong: rgba(255, 255, 255, 0.07);
+        --shadow-heavy: 0 34px 90px rgba(0, 0, 0, 0.52);
+        --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --page: 1440px;
+      }
+    }
+
+    @layer base {
+      body {
+        font-family: var(--font-body);
+        color: var(--text-primary);
+        background-color: var(--space-dark);
+        background-image:
+          radial-gradient(circle at 12% 42%, rgba(0, 240, 255, 0.08), transparent 36%),
+          radial-gradient(circle at 88% 20%, rgba(255, 42, 138, 0.08), transparent 38%),
+          radial-gradient(circle at 50% 100%, rgba(216, 181, 109, 0.07), transparent 46%),
+          linear-gradient(180deg, #030305, #08080b 46%, #030305);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,0.026) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.026) 1px, transparent 1px);
+        background-size: 62px 62px;
+        mask-image: radial-gradient(circle at center, black 12%, transparent 78%);
+        pointer-events: none;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background:
+          linear-gradient(110deg, transparent 0 42%, rgba(255,255,255,0.035) 49%, transparent 56% 100%);
+        opacity: 0.45;
+        pointer-events: none;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--brand-cyan);
+        outline-offset: 5px;
+      }
+    }
+
+    @layer layout {
+      .portal-layout {
+        width: min(100%, var(--page));
+        min-height: 100svh;
+        margin-inline: auto;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        padding: clamp(1.25rem, 4vw, 3rem);
+      }
+
+      .top-nav,
+      .portal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-color: var(--glass-border);
+      }
+
+      .top-nav { border-bottom: 1px solid var(--glass-border); padding-bottom: 1.35rem; }
+      .portal-footer { border-top: 1px solid var(--glass-border); padding-top: 1.35rem; }
+
+      .main-stage {
+        display: grid;
+        align-content: center;
+        gap: clamp(2.75rem, 6vw, 5rem);
+        padding-block: clamp(2.5rem, 6vw, 5rem);
+      }
+
+      .intro-row {
+        display: grid;
+        gap: 1.25rem;
+      }
+
+      .bubble-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(1rem, 2.4vw, 2rem);
+        perspective: 1200px;
+      }
+
+      @media (max-width: 1040px) {
+        .bubble-grid { grid-template-columns: 1fr; }
+      }
+
+      @media (min-width: 860px) {
+        .intro-row {
+          grid-template-columns: minmax(0, .92fr) minmax(280px, .46fr);
+          align-items: end;
+        }
+      }
+    }
+
+    @layer components {
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 10000;
+        padding: .7rem 1rem;
+        border-radius: 999px;
+        background: var(--text-primary);
+        color: var(--space-dark);
+        font-weight: 700;
+        transform: translateY(-170%);
+        transition: transform .25s var(--ease-cinematic);
+      }
+
+      .skip-link:focus { transform: translateY(0); }
+
+      .brand-lockup,
+      .system-status,
+      .portal-chip {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .brand-lockup { gap: 1rem; min-width: 0; }
+
+      .brand-orb {
+        width: 34px;
+        height: 34px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        padding: 2px;
+        background: conic-gradient(from 180deg, var(--brand-cyan), var(--brand-magenta), var(--brand-gold), var(--brand-cyan));
+        animation: slowSpin 12s linear infinite;
+        box-shadow: 0 0 30px rgba(0, 240, 255, .18);
+      }
+
+      .brand-orb-inner { width: 100%; height: 100%; border-radius: 50%; background: var(--space-dark); }
+
+      .brand-text {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .system-status,
+      .portal-footer,
+      .portal-chip {
+        font-family: var(--font-mono);
+        font-size: .72rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: .16em;
+      }
+
+      .system-status { gap: .55rem; }
+      .system-status::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--brand-green);
+        box-shadow: 0 0 14px var(--brand-green);
+      }
+
+      .headline {
+        max-width: 900px;
+        font-family: var(--font-display);
+        font-size: clamp(2.85rem, 7vw, 6.4rem);
+        line-height: .94;
+        letter-spacing: -.06em;
+      }
+
+      .headline span {
+        display: block;
+        background: linear-gradient(110deg, var(--text-primary), var(--brand-cyan) 42%, var(--brand-magenta) 76%, var(--brand-gold));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .sub-headline {
+        max-width: 620px;
+        color: var(--text-muted);
+        font-size: clamp(1rem, 1.4vw, 1.18rem);
+        line-height: 1.7;
+      }
+
+      .portal-chip {
+        width: fit-content;
+        gap: .6rem;
+        align-self: start;
+        padding: .72rem .95rem;
+        border: 1px solid var(--glass-border);
+        border-radius: 999px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+      }
+
+      .portal-chip::before {
+        content: "✦";
+        color: var(--brand-gold);
+        letter-spacing: 0;
+      }
+
+      .portal-bubble {
+        --accent: var(--brand-cyan);
+        position: relative;
+        min-height: clamp(360px, 43vw, 450px);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        isolation: isolate;
+        overflow: hidden;
+        padding: clamp(1.45rem, 3vw, 2.45rem);
+        border-radius: clamp(26px, 3.5vw, 38px);
+        background:
+          radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 34%),
+          linear-gradient(145deg, var(--glass-bg-strong), rgba(255,255,255,.015));
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--shadow-heavy), inset 0 1px 0 rgba(255,255,255,.12), inset 0 -1px 0 rgba(0,0,0,.7);
+        backdrop-filter: blur(22px) saturate(150%);
+        transform-style: preserve-3d;
+        transition:
+          transform .7s var(--ease-cinematic),
+          border-color .45s ease,
+          box-shadow .7s var(--ease-cinematic),
+          background .7s var(--ease-cinematic);
+      }
+
+      .portal-bubble[data-id="hub"] { --accent: var(--brand-cyan); animation: float 6s ease-in-out infinite; }
+      .portal-bubble[data-id="web3"] { --accent: var(--brand-magenta); animation: float 7s ease-in-out infinite 1s; }
+      .portal-bubble[data-id="footprints"] { --accent: var(--brand-gold); animation: float 6.5s ease-in-out infinite 2s; }
+
+      .portal-bubble::before,
+      .portal-bubble::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .portal-bubble::before {
+        top: 14%;
+        left: 50%;
+        width: clamp(132px, 14vw, 176px);
+        height: clamp(132px, 14vw, 176px);
+        border-radius: 50%;
+        transform: translateX(-50%);
+        background:
+          radial-gradient(circle at 30% 26%, rgba(255,255,255,.96), rgba(255,255,255,.2) 18%, transparent 58%),
+          radial-gradient(circle at 64% 70%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 62%);
+        border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+        box-shadow: inset -14px -24px 44px rgba(0,0,0,.56), 0 0 60px color-mix(in srgb, var(--accent) 28%, transparent);
+        transition: transform .58s var(--ease-bounce), box-shadow .55s var(--ease-cinematic);
+      }
+
+      .portal-bubble::after {
+        inset: -1px;
+        border-radius: inherit;
+        background:
+          linear-gradient(115deg, transparent 0 35%, rgba(255,255,255,.18) 46%, transparent 58% 100%);
+        transform: translateX(-130%);
+        opacity: 0;
+        transition: transform .9s var(--ease-cinematic), opacity .4s ease;
+      }
+
+      .portal-bubble:hover,
+      .portal-bubble:focus-visible {
+        transform: translateY(-16px) scale(1.018) rotateX(2deg);
+        border-color: color-mix(in srgb, var(--accent) 62%, transparent);
+        box-shadow:
+          0 44px 100px rgba(0,0,0,.68),
+          0 0 74px color-mix(in srgb, var(--accent) 18%, transparent),
+          inset 0 1px 0 rgba(255,255,255,.22);
+      }
+
+      .portal-bubble:hover::before,
+      .portal-bubble:focus-visible::before {
+        transform: translateX(-50%) translateY(-12px) scale(1.08);
+        box-shadow: inset -14px -24px 44px rgba(0,0,0,.56), 0 0 92px color-mix(in srgb, var(--accent) 58%, transparent);
+      }
+
+      .portal-bubble:hover::after,
+      .portal-bubble:focus-visible::after { transform: translateX(130%); opacity: 1; }
+
+      .bubble-content { position: relative; z-index: 2; text-align: left; }
+
+      .bubble-tag {
+        display: block;
+        margin-bottom: 1rem;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: .69rem;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+
+      .bubble-title {
+        margin-bottom: .8rem;
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 2.72rem);
+        line-height: 1.03;
+        letter-spacing: -.04em;
+      }
+
+      .bubble-desc {
+        max-width: 34ch;
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: .97rem;
+        line-height: 1.55;
+      }
+
+      .bubble-action {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-top: 1px solid var(--glass-border);
+        padding-top: 1.35rem;
+        color: rgba(255,255,255,.62);
+        font-family: var(--font-mono);
+        font-size: .72rem;
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        transition: color .3s ease;
+      }
+
+      .portal-bubble:hover .bubble-action,
+      .portal-bubble:focus-visible .bubble-action { color: var(--accent); }
+
+      .arrow-btn {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        border: 1px solid var(--glass-border-strong);
+        transition: transform .45s var(--ease-bounce), background .35s ease, color .35s ease, border-color .35s ease;
+      }
+
+      .portal-bubble:hover .arrow-btn,
+      .portal-bubble:focus-visible .arrow-btn {
+        transform: rotate(-45deg);
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #020204;
+      }
+
+      .burst-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at var(--origin-x, 50%) var(--origin-y, 50%), var(--burst-color, var(--brand-cyan)) 0, rgba(3,3,5,.96) 42%, #030305 100%);
+        transition: opacity .72s var(--ease-cinematic);
+      }
+
+      .burst-overlay.active { opacity: 1; pointer-events: all; }
+
+      .burst-text {
+        max-width: min(88vw, 920px);
+        text-align: center;
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 8vw, 6.4rem);
+        line-height: .95;
+        letter-spacing: -.055em;
+        color: #fff;
+        opacity: 0;
+        transform: scale(.92) translateY(12px);
+        transition: opacity .45s ease .16s, transform .62s var(--ease-bounce) .16s;
+      }
+
+      .burst-overlay.active .burst-text { opacity: 1; transform: scale(1) translateY(0); }
+
+      @media (max-width: 680px) {
+        .top-nav,
+        .portal-footer { align-items: flex-start; flex-direction: column; }
+        .system-status { font-size: .64rem; letter-spacing: .12em; }
+        .portal-bubble { min-height: 340px; }
+      }
+    }
+
+    @layer motion {
+      @keyframes float {
+        0%, 100% { translate: 0 0; }
+        50% { translate: 0 -14px; }
+      }
+
+      @keyframes slowSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .is-imploding {
+        animation: implodeBurst .82s forwards var(--ease-cinematic) !important;
+        pointer-events: none;
+      }
+
+      @keyframes implodeBurst {
+        0% { transform: scale(1); filter: brightness(1); }
+        38% { transform: scale(.86); filter: brightness(2.2) saturate(1.4); }
+        100% { transform: scale(2.8); opacity: 0; filter: blur(20px); }
+      }
+    }
+
+    @layer utilities {
+      @media (prefers-reduced-motion: reduce) {
+        .portal-bubble,
+        .brand-orb { animation: none !important; }
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#portal-grid">Skip to portal options</a>
+
+  <div class="portal-layout">
+    <header class="top-nav" aria-label="Gateway header">
+      <a class="brand-lockup" href="./index.html" aria-label="£T€R₦AL W£₿3 gateway home">
+        <span class="brand-orb" aria-hidden="true"><span class="brand-orb-inner"></span></span>
+        <span class="brand-text">£T€R₦AL W£₿3</span>
+      </a>
+      <p class="system-status">Gateway online</p>
+    </header>
+
+    <main class="main-stage">
+      <section class="intro-row" aria-labelledby="gateway-title">
+        <div>
+          <h1 class="headline" id="gateway-title">Select your <span>reality.</span></h1>
+          <p class="sub-headline">Three distinct environments. One unified ecosystem. Burst through a nexus bubble to enter commerce, art chronicles, or the coming Footprints layer.</p>
+        </div>
+        <p class="portal-chip">£T€R₦AL W£₿3 ART ¢HRO₦ICL€$ ¢R£ATIO₦®</p>
+      </section>
+
+      <nav class="bubble-grid" id="portal-grid" aria-label="Portal destinations">
+        <button class="portal-bubble" type="button" data-id="hub" data-url="./hub.html" data-color="#00f0ff" data-title="£T€R₦AL Hub initializing">
+          <span class="bubble-content">
+            <span class="bubble-tag">Commerce Layer</span>
+            <span class="bubble-title">£T€R₦AL Hub</span>
+            <span class="bubble-desc">A premium cyber-marketplace for vendors, creators, retailers, and culture-first consumers.</span>
+            <span class="bubble-action"><span>Burst to Enter</span><span class="arrow-btn" aria-hidden="true">→</span></span>
+          </span>
+        </button>
+
+        <button class="portal-bubble" type="button" data-id="web3" data-url="./web3.html" data-color="#ff2a8a" data-title="W£₿3 loading">
+          <span class="bubble-content">
+            <span class="bubble-tag">Art Chronicles</span>
+            <span class="bubble-title">W£₿3</span>
+            <span class="bubble-desc">Immersive exhibitions, blockchain-native collections, and editorial storytelling for the metaverse era.</span>
+            <span class="bubble-action"><span>Burst to Enter</span><span class="arrow-btn" aria-hidden="true">→</span></span>
+          </span>
+        </button>
+
+        <button class="portal-bubble" type="button" data-id="footprints" data-url="./footprints.html" data-color="#d8b56d" data-title="Footprints preview">
+          <span class="bubble-content">
+            <span class="bubble-tag">Coming Soon</span>
+            <span class="bubble-title">Footprints</span>
+            <span class="bubble-desc">Cultural trails, creator movement, provenance paths, and journey-based discovery for the next layer.</span>
+            <span class="bubble-action"><span>Preview Node</span><span class="arrow-btn" aria-hidden="true">→</span></span>
+          </span>
+        </button>
+      </nav>
+    </main>
+
+    <footer class="portal-footer">
+      <span>© 2026 Millenial Renaissance Art Limited</span>
+      <span>Gateway v2.2.1 · Zero Tailwind</span>
+    </footer>
+  </div>
+
+  <div class="burst-overlay" id="burstOverlay" aria-hidden="true">
+    <div class="burst-text" id="burstText">Initiating...</div>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const bubbles = Array.from(document.querySelectorAll(".portal-bubble"));
+      const overlay = document.getElementById("burstOverlay");
+      const burstText = document.getElementById("burstText");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      bubbles.forEach((bubble) => {
+        const url = bubble.dataset.url;
+        if (url) {
+          bubble.addEventListener("pointerenter", () => {
+            const link = document.createElement("link");
+            link.rel = "prefetch";
+            link.href = url;
+            document.head.appendChild(link);
+          }, { once: true });
+        }
+
+        bubble.addEventListener("click", (event) => {
+          const destination = bubble.dataset.url;
+          if (!destination) return;
+
+          if (reducedMotion) {
+            window.location.assign(destination);
+            return;
+          }
+
+          const rect = bubble.getBoundingClientRect();
+          const originX = event.clientX || rect.left + rect.width / 2;
+          const originY = event.clientY || rect.top + rect.height / 2;
+          const color = bubble.dataset.color || "#00f0ff";
+          const title = bubble.dataset.title || "Initiating";
+
+          overlay.style.setProperty("--origin-x", `${originX}px`);
+          overlay.style.setProperty("--origin-y", `${originY}px`);
+          overlay.style.setProperty("--burst-color", color);
+          burstText.textContent = title;
+          overlay.setAttribute("aria-hidden", "false");
+
+          bubble.classList.add("is-imploding");
+
+          window.setTimeout(() => overlay.classList.add("active"), 140);
+          window.setTimeout(() => window.location.assign(destination), 930);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

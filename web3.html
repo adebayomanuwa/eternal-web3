@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Eternal Web3 Art Chronicles Creation — immersive exhibitions, blockchain-native collections, and editorial storytelling for the metaverse era.">
+  <title>Eternal Web3 — Art Chronicles</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics — async, non-blocking per best practice -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T4VZ54YSYQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T4VZ54YSYQ');
+  </script>
+
+  <style>
+    @layer reset, tokens, base, layout, components, utilities;
+
+    @layer reset {
+      *, *::before, *::after { box-sizing: border-box; }
+      * { margin: 0; }
+      html { scroll-behavior: smooth; }
+      body { min-height: 100svh; }
+      img, svg { display: block; max-width: 100%; }
+      button, input { font: inherit; }
+      a { color: inherit; }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    }
+
+    @layer tokens {
+      :root {
+        --font-display: 'Space Grotesk', system-ui, sans-serif;
+        --font-body: 'Inter', system-ui, sans-serif;
+        --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+        --size-page: 1440px;
+        --size-readable: 680px;
+        --radius-sm: 12px;
+        --radius-md: 20px;
+        --radius-lg: 32px;
+
+        --space-1: clamp(0.25rem, 0.22rem + 0.16vw, 0.375rem);
+        --space-2: clamp(0.5rem, 0.45rem + 0.25vw, 0.75rem);
+        --space-3: clamp(0.75rem, 0.68rem + 0.36vw, 1rem);
+        --space-4: clamp(1rem, 0.9rem + 0.52vw, 1.5rem);
+        --space-5: clamp(1.5rem, 1.2rem + 1.55vw, 2.5rem);
+        --space-6: clamp(2rem, 1.45rem + 2.84vw, 4rem);
+        --space-7: clamp(3rem, 2.1rem + 4.65vw, 6.5rem);
+        --space-8: clamp(4.5rem, 3rem + 7.75vw, 10rem);
+
+        --shadow-soft: 0 24px 80px rgb(0 0 0 / 0.28);
+        --shadow-ring: 0 0 0 1px color-mix(in srgb, var(--line-strong), transparent 35%);
+      }
+
+      :root,
+      [data-theme='dark'] {
+        --ink: #f3efe8;
+        --ink-muted: #a9a196;
+        --ink-dim: #6f675f;
+        --canvas: #070706;
+        --canvas-2: #10100e;
+        --surface: rgb(255 255 255 / 0.055);
+        --surface-strong: rgb(255 255 255 / 0.095);
+        --line: rgb(255 255 255 / 0.12);
+        --line-strong: rgb(255 255 255 / 0.2);
+        --gold: #d8b56d;
+        --violet: #7c5cff;
+        --aqua: #63f3d8;
+        --rose: #ff6f91;
+        --wash: radial-gradient(circle at 16% 12%, rgb(124 92 255 / 0.24), transparent 32%), radial-gradient(circle at 82% 18%, rgb(216 181 109 / 0.16), transparent 30%), radial-gradient(circle at 52% 94%, rgb(99 243 216 / 0.10), transparent 38%), linear-gradient(180deg, #050504, #0a0a08 42%, #050504);
+      }
+
+      [data-theme='light'] {
+        --ink: #17130e;
+        --ink-muted: #62594e;
+        --ink-dim: #918779;
+        --canvas: #f7f3eb;
+        --canvas-2: #ebe3d4;
+        --surface: rgb(255 255 255 / 0.62);
+        --surface-strong: rgb(255 255 255 / 0.86);
+        --line: rgb(20 16 10 / 0.13);
+        --line-strong: rgb(20 16 10 / 0.22);
+        --gold: #9b6d1f;
+        --violet: #5d42d6;
+        --aqua: #008f7d;
+        --rose: #bd355b;
+        --wash: radial-gradient(circle at 16% 12%, rgb(124 92 255 / 0.14), transparent 32%), radial-gradient(circle at 82% 18%, rgb(155 109 31 / 0.15), transparent 30%), linear-gradient(180deg, #fbf7ef, #efe7d9 52%, #fbf7ef);
+        --shadow-soft: 0 24px 80px rgb(80 54 21 / 0.14);
+      }
+    }
+
+    @layer base {
+      body {
+        background: var(--wash), var(--canvas);
+        color: var(--ink);
+        font-family: var(--font-body);
+        line-height: 1.65;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.38;
+        background-image:
+          linear-gradient(to right, var(--line) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: linear-gradient(to bottom, #000, transparent 72%);
+      }
+
+      h1, h2, h3, h4 {
+        color: var(--ink);
+        font-family: var(--font-display);
+        font-weight: 600;
+        letter-spacing: -0.045em;
+        line-height: 0.98;
+      }
+
+      h1 { font-size: clamp(3.25rem, 8vw, 7.75rem); }
+      h2 { font-size: clamp(2.25rem, 5vw, 5.25rem); }
+      h3 { font-size: clamp(1.25rem, 2vw, 1.65rem); line-height: 1.08; }
+      h4 { font-size: 1rem; line-height: 1.15; }
+
+      p { color: var(--ink-muted); }
+      :focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    }
+
+    @layer layout {
+      .shell {
+        width: min(100% - clamp(1.25rem, 4vw, 4rem), var(--size-page));
+        margin-inline: auto;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in srgb, var(--canvas), transparent 14%);
+        backdrop-filter: blur(18px);
+      }
+
+      .header-inner {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+      }
+
+      .section {
+        padding-block: var(--space-8);
+        border-top: 1px solid var(--line);
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+        margin-bottom: var(--space-6);
+      }
+
+      .section-heading p { max-width: var(--size-readable); }
+
+      .hero {
+        min-height: calc(100svh - 76px);
+        display: grid;
+        align-items: center;
+        padding-block: var(--space-7);
+      }
+
+      .hero-grid {
+        display: grid;
+        gap: var(--space-7);
+        align-items: end;
+      }
+
+      .hero-copy { max-width: 920px; }
+
+      .split-grid,
+      .article-grid,
+      .gallery-grid,
+      .community-grid,
+      .footer-grid {
+        display: grid;
+        gap: var(--space-4);
+      }
+
+      .article-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+      .community-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+      .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+      .split-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+      .footer-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); }
+
+      @media (min-width: 900px) {
+        .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.6fr); }
+        .section-heading { grid-template-columns: 0.9fr 1fr; align-items: end; }
+      }
+    }
+
+    @layer components {
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 99;
+        padding: 10px 14px;
+        background: var(--ink);
+        color: var(--canvas);
+        border-radius: 999px;
+        transform: translateY(-160%);
+      }
+
+      .skip-link:focus { transform: translateY(0); }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.72rem;
+        color: var(--ink);
+        font-family: var(--font-display);
+        font-size: 0.98rem;
+        font-weight: 700;
+        letter-spacing: 0.045em;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .brand-mark {
+        width: 34px;
+        aspect-ratio: 1;
+        border: 1px solid var(--line-strong);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(circle at 35% 25%, var(--gold), transparent 34%), var(--surface);
+        box-shadow: var(--shadow-ring);
+      }
+
+      .brand-mark::before {
+        content: '';
+        width: 10px;
+        aspect-ratio: 1;
+        border: 1px solid currentColor;
+        border-radius: 50%;
+      }
+
+      .nav {
+        display: none;
+        align-items: center;
+        gap: var(--space-4);
+      }
+
+      .nav a,
+      .text-link {
+        color: var(--ink-muted);
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.09em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .nav a:hover,
+      .text-link:hover { color: var(--gold); }
+
+      .header-actions { display: flex; align-items: center; gap: var(--space-2); }
+
+      .icon-button,
+      .button {
+        min-height: 42px;
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: var(--shadow-ring);
+        cursor: pointer;
+      }
+
+      .icon-button {
+        width: 42px;
+        display: grid;
+        place-items: center;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        padding-inline: 1.05rem;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .button[data-variant='primary'] {
+        border-color: color-mix(in srgb, var(--gold), transparent 20%);
+        background: linear-gradient(135deg, var(--gold), color-mix(in srgb, var(--violet), var(--gold) 44%));
+        color: #070706;
+      }
+
+      .button:hover,
+      .icon-button:hover { transform: translateY(-1px); border-color: var(--gold); }
+
+      .menu-toggle { display: grid; }
+
+      .mobile-panel {
+        display: none;
+        border-top: 1px solid var(--line);
+        padding-block: var(--space-4);
+      }
+
+      .mobile-panel[data-open='true'] { display: grid; gap: var(--space-3); }
+      .mobile-panel a { text-decoration: none; color: var(--ink-muted); padding-block: var(--space-2); }
+
+      .eyebrow {
+        color: var(--gold);
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .hero-title { max-width: 980px; margin-top: var(--space-4); }
+      .hero-subtitle { max-width: 620px; margin-top: var(--space-4); font-size: clamp(1.05rem, 1.5vw, 1.28rem); }
+
+      .hero-actions,
+      .meta-row { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+      .hero-actions { margin-top: var(--space-5); }
+      .meta-row { margin-top: var(--space-6); }
+
+      .metric {
+        min-width: 150px;
+        border-left: 1px solid var(--line-strong);
+        padding-left: var(--space-3);
+      }
+
+      .metric strong {
+        display: block;
+        color: var(--ink);
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        line-height: 1;
+      }
+
+      .metric span {
+        color: var(--ink-dim);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .orbital-card {
+        position: relative;
+        min-height: 520px;
+        overflow: hidden;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        background: linear-gradient(145deg, var(--surface-strong), rgb(255 255 255 / 0.025));
+        box-shadow: var(--shadow-soft), var(--shadow-ring);
+      }
+
+      .orbital-card::before,
+      .orbital-card::after {
+        content: '';
+        position: absolute;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        inset: 12%;
+      }
+
+      .orbital-card::after { inset: 27%; border-color: color-mix(in srgb, var(--gold), transparent 64%); }
+
+      .artifact-core {
+        position: absolute;
+        inset: 31% 20%;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line-strong);
+        border-radius: 44% 56% 48% 52%;
+        background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--gold), transparent 18%), transparent 34%), linear-gradient(145deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.02));
+        box-shadow: inset 0 0 60px rgb(255 255 255 / 0.06), 0 28px 100px rgb(124 92 255 / 0.24);
+      }
+
+      .artifact-core span {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .floating-note {
+        position: absolute;
+        max-width: 210px;
+        padding: var(--space-3);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: color-mix(in srgb, var(--canvas), transparent 16%);
+        backdrop-filter: blur(14px);
+      }
+
+      .floating-note:nth-of-type(2) { top: 8%; left: 8%; }
+      .floating-note:nth-of-type(3) { right: 8%; top: 26%; }
+      .floating-note:nth-of-type(4) { left: 10%; bottom: 10%; }
+
+      .floating-note small,
+      .card-kicker,
+      .price-tier {
+        color: var(--gold);
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .floating-note p { margin-top: var(--space-1); font-size: 0.9rem; line-height: 1.35; }
+
+      .card,
+      .price-card,
+      .gallery-card,
+      .community-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, var(--surface), rgb(255 255 255 / 0.025));
+        box-shadow: var(--shadow-ring);
+      }
+
+      .card,
+      .price-card,
+      .community-card { padding: var(--space-5); }
+      .card { min-height: 300px; display: flex; flex-direction: column; gap: var(--space-4); }
+      .card::before,
+      .price-card::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        opacity: 0.48;
+      }
+
+      .card p { margin-top: auto; }
+
+      .card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        color: var(--ink-dim);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .price-card { display: flex; flex-direction: column; gap: var(--space-4); }
+      .price-card[data-featured='true'] { border-color: color-mix(in srgb, var(--gold), transparent 34%); background: linear-gradient(180deg, color-mix(in srgb, var(--gold), transparent 88%), var(--surface)); }
+
+      .price { color: var(--ink); font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.45rem); font-weight: 700; letter-spacing: -0.05em; line-height: 0.9; }
+      .price span { color: var(--ink-muted); font-family: var(--font-body); font-size: 1rem; font-weight: 500; letter-spacing: 0; }
+
+      .feature-list { display: grid; gap: var(--space-2); list-style: none; padding: 0; }
+      .feature-list li { color: var(--ink-muted); padding-left: 1.2rem; position: relative; }
+      .feature-list li::before { content: '✦'; position: absolute; left: 0; color: var(--gold); }
+
+      .gallery-card { padding: var(--space-3); }
+      .gallery-frame {
+        aspect-ratio: 4 / 5;
+        display: grid;
+        place-items: center;
+        border-radius: calc(var(--radius-md) - 8px);
+        border: 1px solid var(--line);
+        background:
+          radial-gradient(circle at 35% 25%, color-mix(in srgb, var(--violet), transparent 68%), transparent 34%),
+          radial-gradient(circle at 68% 70%, color-mix(in srgb, var(--gold), transparent 72%), transparent 36%),
+          var(--canvas-2);
+      }
+
+      .gallery-frame svg { width: 56px; color: var(--ink-muted); }
+      .gallery-card footer { padding: var(--space-3) var(--space-1) var(--space-1); }
+      .gallery-card p { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+      .community-card { display: grid; gap: var(--space-2); min-height: 160px; text-decoration: none; }
+      .community-card strong { font-family: var(--font-display); font-size: 1.3rem; }
+      .community-card span { color: var(--ink-dim); font-family: var(--font-mono); font-size: 0.76rem; }
+      .community-card em { align-self: end; color: var(--ink-muted); font-style: normal; }
+
+      .site-footer { padding-block: var(--space-7) var(--space-5); border-top: 1px solid var(--line); }
+      .footer-block h2 { font-size: clamp(2rem, 5vw, 4.5rem); max-width: 760px; }
+      .footer-block p { margin-top: var(--space-4); max-width: 560px; }
+      .footer-links { display: grid; gap: var(--space-2); list-style: none; padding: 0; }
+      .footer-links a { color: var(--ink-muted); text-decoration: none; }
+      .footer-links a:hover { color: var(--gold); }
+
+      .newsletter {
+        display: flex;
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+      }
+
+      .newsletter input {
+        min-width: 0;
+        width: 100%;
+        border: 1px solid var(--line-strong);
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--ink);
+        padding: 0.8rem 1rem;
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin-top: var(--space-6);
+        padding-top: var(--space-4);
+        border-top: 1px solid var(--line);
+        color: var(--ink-dim);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      @media (min-width: 1060px) {
+        .nav { display: flex; }
+        .menu-toggle { display: none; }
+        .mobile-panel { display: none !important; }
+      }
+
+      @media (max-width: 520px) {
+        .header-actions .button { display: none; }
+        .newsletter { flex-direction: column; }
+        .orbital-card { min-height: 420px; }
+        .floating-note { max-width: 175px; }
+        .floating-note:nth-of-type(3) { right: 5%; }
+      }
+    }
+
+    @layer utilities {
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    }
+  </style>
+
+<style>
+  .portal-return-link {
+    position: fixed;
+    left: 18px;
+    bottom: 18px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 14px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 999px;
+    background: rgba(6,6,10,.68);
+    color: #f4f0ea;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    font: 600 12px/1.1 Inter, system-ui, sans-serif;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 16px 40px rgba(0,0,0,.32);
+  }
+  .portal-return-link:hover { border-color: rgba(0,240,255,.55); transform: translateY(-1px); }
+</style>
+
+</head>
+
+<body>
+  <a class="portal-return-link" href="./index.html" aria-label="Return to Eternal portal">← Portal</a>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="/" aria-label="Eternal Web3 home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Eternal Web3
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#chronicles">Chronicles</a>
+        <a href="#collections">Collections</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#community">Community</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" type="button" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        </button>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle color theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 6.5 6.5 0 0 1-9-9Z"/></svg>
+        </button>
+        <a class="button" data-variant="primary" href="#collections">Connect Wallet</a>
+        <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <nav class="shell mobile-panel" id="mobilePanel" data-open="false" aria-label="Mobile navigation">
+      <a href="#chronicles">Chronicles</a>
+      <a href="#collections">Collections</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#community">Community</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Digital permanence · Est. 2024</p>
+          <h1 class="hero-title" id="hero-title">Art chronicles for the metaverse era.</h1>
+          <p class="hero-subtitle">Immersive exhibitions, blockchain-native collections, and editorial storytelling where classic mastery meets digital infrastructure.</p>
+
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button" data-variant="primary" href="#gallery">Enter Gallery</a>
+            <a class="button" href="#collections">View Collections</a>
+          </div>
+
+          <div class="meta-row" aria-label="Platform highlights">
+            <p class="metric"><strong>05</strong><span>Editorial worlds</span></p>
+            <p class="metric"><strong>03</strong><span>Commission tiers</span></p>
+            <p class="metric"><strong>∞</strong><span>Virtual rooms</span></p>
+          </div>
+        </div>
+
+        <aside class="orbital-card" aria-label="Featured editorial universe">
+          <div class="artifact-core"><span>Living Archive</span></div>
+          <article class="floating-note">
+            <small>Metaverse Diary</small>
+            <p>Virtual galleries without the tyranny of square footage.</p>
+          </article>
+          <article class="floating-note">
+            <small>Pixel Diary</small>
+            <p>Constraint as taste. Low fidelity as luxury.</p>
+          </article>
+          <article class="floating-note">
+            <small>Immersive Echoes</small>
+            <p>Spatial audio, AR sculpture, and the new gallery silence.</p>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="chronicles" aria-labelledby="chronicles-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Editorial system</p>
+            <h2 id="chronicles-title">Latest chronicles</h2>
+          </div>
+          <p>Five editorial lanes built for deep cultural context, not disposable content confetti. The internet has enough glitter. This is architecture.</p>
+        </div>
+
+        <div class="article-grid">
+          <article class="card">
+            <span class="card-kicker">Metaverse Diary</span>
+            <h3>Architecting infinite galleries</h3>
+            <p>How exhibition space changes when physics, geography, and rent stop acting like creative directors.</p>
+            <footer class="card-meta"><time datetime="2026-05-20">May 20</time><span>8 min read</span></footer>
+          </article>
+
+          <article class="card">
+            <span class="card-kicker">Pixel Diary</span>
+            <h3>The art of digital constraint</h3>
+            <p>Why limited palettes, compressed forms, and small screens still produce serious contemporary language.</p>
+            <footer class="card-meta"><time datetime="2026-05-18">May 18</time><span>6 min read</span></footer>
+          </article>
+
+          <article class="card">
+            <span class="card-kicker">MetaScroll</span>
+            <h3>Chronicles of the chain</h3>
+            <p>Field notes on smart contracts, provenance, and cultural memory inside decentralized environments.</p>
+            <footer class="card-meta"><time datetime="2026-05-15">May 15</time><span>12 min read</span></footer>
+          </article>
+
+          <article class="card">
+            <span class="card-kicker">MetaTales</span>
+            <h3>User-generated mythologies</h3>
+            <p>Community-built lore, audio narrative, and participatory worlds that feel more temple than timeline.</p>
+            <footer class="card-meta"><time datetime="2026-05-12">May 12</time><span>10 min read</span></footer>
+          </article>
+
+          <article class="card">
+            <span class="card-kicker">Immersive Echoes</span>
+            <h3>VR exhibition reviews</h3>
+            <p>Critical reviews of virtual shows, spatial computing experiments, and new formats for attention.</p>
+            <footer class="card-meta"><time datetime="2026-05-10">May 10</time><span>7 min read</span></footer>
+          </article>
+
+          <article class="card">
+            <span class="card-kicker">Editorial</span>
+            <h3>The tokenized Sistine</h3>
+            <p>When classical masterpieces meet blockchain provenance: what gets preserved, what gets flattened?</p>
+            <footer class="card-meta"><time datetime="2026-05-08">May 08</time><span>15 min read</span></footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="collections" aria-labelledby="collections-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Collections & commissions</p>
+            <h2 id="collections-title">Built for collectors, institutions, and impossible rooms.</h2>
+          </div>
+          <a class="text-link" href="#footer">Full price sheet →</a>
+        </div>
+
+        <div class="split-grid">
+          <article class="price-card">
+            <span class="price-tier">Standard</span>
+            <p class="price">$100 <span>— $1,500</span></p>
+            <p>Interactive digital collectibles and limited NFT drops for emerging collectors.</p>
+            <ul class="feature-list">
+              <li>ERC-721 minting</li>
+              <li>Clean metadata structure</li>
+              <li>Secondary royalty support</li>
+              <li>Marketplace-ready assets</li>
+            </ul>
+            <a class="button" href="mailto:info@eternalmraltd.com">Inquire</a>
+          </article>
+
+          <article class="price-card" data-featured="true">
+            <span class="price-tier">Premium · Most selected</span>
+            <p class="price">$1,500 <span>— $15,000</span></p>
+            <p>AR installations and metaverse exhibitions with custom venue direction.</p>
+            <ul class="feature-list">
+              <li>AR model integration</li>
+              <li>Mobile compatibility</li>
+              <li>Custom virtual venue</li>
+              <li>Interactive curation layer</li>
+              <li>White-glove presentation</li>
+            </ul>
+            <a class="button" data-variant="primary" href="mailto:info@eternalmraltd.com">Commission</a>
+          </article>
+
+          <article class="price-card">
+            <span class="price-tier">Bespoke</span>
+            <p class="price">$15,000 <span>— $50,000+</span></p>
+            <p>Fully immersive VR environments and institutional-grade digital asset management.</p>
+            <ul class="feature-list">
+              <li>Full VR compatibility</li>
+              <li>Hardware optimization</li>
+              <li>Spatial audio direction</li>
+              <li>Dedicated asset manager</li>
+              <li>Long-term archival planning</li>
+            </ul>
+            <a class="button" href="mailto:info@eternalmraltd.com">Contact studio</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery" aria-labelledby="gallery-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Virtual gallery</p>
+            <h2 id="gallery-title">A preview of the archive.</h2>
+          </div>
+          <a class="text-link" href="#footer">Enter full gallery →</a>
+        </div>
+
+        <div class="gallery-grid">
+          <article class="gallery-card">
+            <div class="gallery-frame" role="img" aria-label="Digital sculpture artwork placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+            </div>
+            <footer><h3>Neoclassical Node</h3><p>Digital Art & Collectibles</p></footer>
+          </article>
+
+          <article class="gallery-card">
+            <div class="gallery-frame" role="img" aria-label="AR installation artwork placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <footer><h3>Augmented Galleria</h3><p>Art Galleries & Museums</p></footer>
+          </article>
+
+          <article class="gallery-card">
+            <div class="gallery-frame" role="img" aria-label="Blockchain artwork placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <footer><h3>Genesis Block No. 7</h3><p>Blockchain & Web3</p></footer>
+          </article>
+
+          <article class="gallery-card">
+            <div class="gallery-frame" role="img" aria-label="VR experience artwork placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+            </div>
+            <footer><h3>Echoes of Eternity</h3><p>Entertainment & Multimedia</p></footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="community" aria-labelledby="community-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Community layer</p>
+            <h2 id="community-title">Culture needs rooms, not just reach.</h2>
+          </div>
+          <p>Social channels structured as gathering points for collectors, artists, technologists, and people who still believe the future should have taste.</p>
+        </div>
+
+        <div class="community-grid">
+          <a class="community-card" href="#"><strong>Discord</strong><span>@eternalweb3</span><em>12.4k members</em></a>
+          <a class="community-card" href="#"><strong>X / Twitter</strong><span>@eternalweb3</span><em>48.2k followers</em></a>
+          <a class="community-card" href="#"><strong>LinkedIn</strong><span>Eternal Web3 Art</span><em>3.1k connections</em></a>
+          <a class="community-card" href="#"><strong>Mirror</strong><span>eternalweb3.eth</span><em>Weekly essays</em></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="footer">
+    <div class="shell footer-block">
+      <h2>Build the archive before the algorithm forgets the art.</h2>
+      <p>Eternal Web3 redefines the art experience through digital asset management, immersive platforms, and virtual gallery architecture.</p>
+
+      <div class="footer-grid section">
+        <section aria-labelledby="footer-sections">
+          <h3 id="footer-sections">Sections</h3>
+          <ul class="footer-links">
+            <li><a href="#chronicles">Chronicles</a></li>
+            <li><a href="#collections">Collections</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#community">Community</a></li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="footer-legal">
+          <h3 id="footer-legal">Legal</h3>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Use</a></li>
+            <li><a href="#">NFT License</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="footer-newsletter">
+          <h3 id="footer-newsletter">Stay connected</h3>
+          <p>Weekly dispatches on digital art, metaverse architecture, and Web3 culture.</p>
+          <form class="newsletter" id="newsletterForm" data-eternal-waitlist data-segment="web3">
+            <label class="sr-only" for="email">Email address</label>
+            <input id="email" type="email" name="email" placeholder="email@domain.com" autocomplete="email" required>
+            <button class="button" data-variant="primary" type="submit">Subscribe</button>
+          </form>
+        </section>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Eternal Web3 Art Chronicles Creation</p>
+        <p>Analytics active · Consent-ready shell</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      const menuToggle = document.getElementById('menuToggle');
+      const mobilePanel = document.getElementById('mobilePanel');
+      const savedTheme = localStorage.getItem('ew3-theme');
+
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        root.dataset.theme = savedTheme;
+      }
+
+      themeToggle?.addEventListener('click', () => {
+        const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = nextTheme;
+        localStorage.setItem('ew3-theme', nextTheme);
+      });
+
+      menuToggle?.addEventListener('click', () => {
+        const isOpen = mobilePanel?.dataset.open === 'true';
+        mobilePanel.dataset.open = String(!isOpen);
+        menuToggle.setAttribute('aria-expanded', String(!isOpen));
+      });
+
+      mobilePanel?.addEventListener('click', (event) => {
+        if (event.target instanceof HTMLAnchorElement) {
+          mobilePanel.dataset.open = 'false';
+          menuToggle?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/supabase-client.js"></script>
+  <script src="./js/waitlist.js"></script>
+</body>
+</html>

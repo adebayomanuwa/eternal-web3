@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-motion="ready">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Footprints — the trails layer of eternalweb3.com. Cultural trails, provenance paths, and creator movement. Currently in preview.">
+  <meta name="theme-color" content="#030305">
+  <title>Footprints · Trails Layer · eternalweb3.com</title>
+
+  <link rel="canonical" href="https://eternalweb3.com/footprints.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    @layer reset, tokens, base, layout, components, utilities;
+
+    /* ---------- RESET ---------- */
+    @layer reset {
+      *, *::before, *::after { box-sizing: border-box; }
+      * { margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body { min-height: 100svh; overflow-x: hidden; }
+      button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+      a { color: inherit; text-decoration: none; }
+      svg { display: block; max-width: 100%; }
+      input { font: inherit; color: inherit; }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    }
+
+    /* ---------- TOKENS ---------- */
+    @layer tokens {
+      :root {
+        --font-display: "Space Grotesk", system-ui, sans-serif;
+        --font-body: Inter, system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+        --bg-base: #030305;
+        --bg-surface: rgba(255, 255, 255, 0.025);
+        --bg-elevated: rgba(255, 255, 255, 0.05);
+        --border: rgba(255, 255, 255, 0.08);
+        --border-glow: rgba(216, 181, 109, 0.32);
+
+        --text-primary: #f7f2ea;
+        --text-secondary: #a1a1aa;
+        --text-tertiary: #6b6573;
+        --text-dim: #5f596b;
+
+        --brand-gold: #d8b56d;
+        --brand-gold-soft: #f0d99b;
+        --brand-gold-deep: #a8884a;
+        --brand-cyan: #00f0ff;
+        --brand-magenta: #ff2a8a;
+        --brand-green: #00ff88;
+
+        --glass-border: rgba(255, 255, 255, 0.09);
+        --glass-border-strong: rgba(255, 255, 255, 0.18);
+        --glass-bg: rgba(255, 255, 255, 0.035);
+
+        --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --transition-fast: 0.2s var(--ease-cinematic);
+        --transition-slow: 0.6s var(--ease-cinematic);
+
+        --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+        --space-sm: clamp(0.5rem, 1vw, 0.75rem);
+        --space-md: clamp(1rem, 2vw, 1.5rem);
+        --space-lg: clamp(1.5rem, 3vw, 2.5rem);
+        --space-xl: clamp(2.5rem, 5vw, 4rem);
+        --space-2xl: clamp(4rem, 8vw, 6rem);
+        --space-3xl: clamp(6rem, 12vw, 8rem);
+
+        --page: 1440px;
+      }
+    }
+
+    /* ---------- BASE ---------- */
+    @layer base {
+      body {
+        font-family: var(--font-body);
+        font-weight: 300;
+        color: var(--text-primary);
+        background-color: var(--bg-base);
+        background-image:
+          radial-gradient(circle at 50% -10%, rgba(216, 181, 109, 0.08), transparent 48%),
+          radial-gradient(circle at 88% 110%, rgba(216, 181, 109, 0.04), transparent 40%),
+          linear-gradient(180deg, #030305, #08080b 50%, #030305);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,0.022) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.022) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+        pointer-events: none;
+      }
+
+      h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.03em; }
+      p { line-height: 1.7; color: var(--text-secondary); font-weight: 300; }
+
+      :focus-visible {
+        outline: 2px solid var(--brand-gold);
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
+    }
+
+    /* ---------- LAYOUT ---------- */
+    @layer layout {
+      .container {
+        width: min(100%, var(--page));
+        margin-inline: auto;
+        padding-inline: var(--space-lg);
+      }
+
+      main { display: grid; gap: var(--space-3xl); padding-block: var(--space-2xl) var(--space-3xl); }
+
+      section { scroll-margin-top: 100px; }
+    }
+
+    /* ---------- COMPONENTS ---------- */
+    @layer components {
+
+      /* Skip link */
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 10000;
+        padding: .7rem 1rem;
+        border-radius: 999px;
+        background: var(--text-primary);
+        color: var(--bg-base);
+        font-weight: 600;
+        transform: translateY(-170%);
+        transition: transform .25s var(--ease-cinematic);
+      }
+      .skip-link:focus { transform: translateY(0); }
+
+      /* ===== HEADER ===== */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(3, 3, 5, 0.72);
+        backdrop-filter: blur(16px) saturate(150%);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .header-inner {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: var(--space-lg);
+        height: 80px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: .6rem;
+        padding: .55rem .85rem;
+        border: 1px solid var(--glass-border);
+        border-radius: 999px;
+        background: var(--glass-bg);
+        font-family: var(--font-mono);
+        font-size: .7rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+      }
+      .back-link:hover { color: var(--brand-gold); border-color: var(--border-glow); background: rgba(216, 181, 109, 0.05); }
+      .back-link__arrow { display: inline-block; transition: transform var(--transition-fast); }
+      .back-link:hover .back-link__arrow { transform: translateX(-3px); }
+
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        gap: .7rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: .02em;
+      }
+      .brand-mark__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--brand-gold);
+        box-shadow: 0 0 14px var(--brand-gold);
+      }
+
+      .header-nav {
+        display: flex;
+        justify-content: center;
+        gap: clamp(1rem, 2.5vw, 2.2rem);
+      }
+      .header-nav a {
+        position: relative;
+        font-family: var(--font-mono);
+        font-size: .72rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        padding-block: .3rem;
+        transition: color var(--transition-fast);
+      }
+      .header-nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--brand-gold);
+        transition: width .35s var(--ease-cinematic);
+      }
+      .header-nav a:hover { color: var(--text-primary); }
+      .header-nav a:hover::after { width: 100%; }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: .55rem;
+        padding: .45rem .85rem;
+        border: 1px solid var(--border-glow);
+        border-radius: 999px;
+        background: rgba(216, 181, 109, 0.06);
+        font-family: var(--font-mono);
+        font-size: .68rem;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        color: var(--brand-gold-soft);
+      }
+      .status-pill::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--brand-gold);
+        box-shadow: 0 0 10px var(--brand-gold);
+      }
+
+      @media (max-width: 1024px) {
+        .header-nav { display: none; }
+        .header-inner { grid-template-columns: auto 1fr auto; }
+      }
+      @media (max-width: 680px) {
+        .back-link__label { display: none; }
+        .status-pill { padding: .4rem .65rem; font-size: .6rem; letter-spacing: .12em; }
+      }
+
+      /* ===== HERO ===== */
+      .hero {
+        display: grid;
+        gap: var(--space-lg);
+        align-items: start;
+        padding-block: var(--space-xl) 0;
+      }
+      .hero__eyebrow {
+        font-family: var(--font-mono);
+        font-size: .72rem;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+        color: var(--brand-gold);
+      }
+      .hero__title {
+        font-size: clamp(2.5rem, 6.4vw, 5rem);
+        line-height: 1.02;
+        letter-spacing: -0.045em;
+        max-width: 14ch;
+      }
+      .hero__title span {
+        display: block;
+        background: linear-gradient(110deg, var(--text-primary) 10%, var(--brand-gold-soft) 50%, var(--brand-gold-deep));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero__sub {
+        max-width: 60ch;
+        font-size: clamp(1rem, 1.3vw, 1.1rem);
+        color: var(--text-secondary);
+      }
+      .hero__cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        margin-top: var(--space-sm);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: .65rem;
+        padding: .9rem 1.4rem;
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: .74rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+      }
+      .btn--primary {
+        background: var(--brand-gold);
+        color: #1a1409;
+        border: 1px solid var(--brand-gold);
+        font-weight: 600;
+      }
+      .btn--primary:hover {
+        transform: translateY(-2px);
+        background: var(--brand-gold-soft);
+        box-shadow: 0 12px 28px rgba(216, 181, 109, 0.28);
+      }
+      .btn--ghost {
+        background: transparent;
+        color: var(--text-primary);
+        border: 1px solid var(--glass-border-strong);
+      }
+      .btn--ghost:hover {
+        transform: translateY(-2px);
+        border-color: var(--brand-gold);
+        color: var(--brand-gold);
+      }
+      .btn__arrow { display: inline-block; transition: transform var(--transition-fast); }
+      .btn:hover .btn__arrow { transform: translateX(3px); }
+
+      /* ===== SECTION HEAD ===== */
+      .section-head {
+        display: grid;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-lg);
+        max-width: 720px;
+      }
+      .section-head__eyebrow {
+        font-family: var(--font-mono);
+        font-size: .68rem;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+        color: var(--brand-gold);
+      }
+      .section-head__title {
+        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+        line-height: 1.1;
+      }
+      .section-head__sub { color: var(--text-secondary); max-width: 60ch; }
+
+      /* ===== PILLARS ===== */
+      .pillars {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--space-md);
+      }
+      .pillar-card {
+        position: relative;
+        display: grid;
+        gap: var(--space-sm);
+        padding: var(--space-lg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--bg-surface);
+        transition: transform var(--transition-slow), border-color var(--transition-slow), background var(--transition-slow);
+      }
+      .pillar-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--border-glow);
+        background: var(--bg-elevated);
+      }
+      .pillar-card__icon {
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: rgba(216, 181, 109, 0.08);
+        color: var(--brand-gold);
+      }
+      .pillar-card__num {
+        font-family: var(--font-mono);
+        font-size: .66rem;
+        letter-spacing: .18em;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+      }
+      .pillar-card__title { font-size: 1.35rem; }
+      .pillar-card__desc { font-size: .94rem; color: var(--text-secondary); }
+
+      /* ===== TRAIL INDEX ===== */
+      .trails {
+        display: grid;
+        gap: var(--space-md);
+      }
+      .trail-card {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: var(--space-md);
+        padding: var(--space-lg) var(--space-lg) var(--space-lg) calc(var(--space-lg) + 12px);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--brand-gold-deep);
+        border-radius: 10px;
+        background: var(--bg-surface);
+        transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+      }
+      .trail-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--border-glow);
+        border-left-color: var(--brand-gold);
+        background: var(--bg-elevated);
+      }
+      .trail-card__body { display: grid; gap: .55rem; min-width: 0; }
+      .trail-card__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        font-family: var(--font-mono);
+        font-size: .68rem;
+        letter-spacing: .12em;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+      }
+      .trail-card__meta strong { color: var(--brand-gold-soft); font-weight: 500; }
+      .trail-card__title {
+        font-size: clamp(1.25rem, 2vw, 1.55rem);
+        line-height: 1.3;
+      }
+      .trail-card__synopsis {
+        font-size: .94rem;
+        color: var(--text-secondary);
+        max-width: 70ch;
+      }
+      .trail-card__cta {
+        font-family: var(--font-mono);
+        font-size: .72rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--brand-gold);
+        white-space: nowrap;
+        transition: transform var(--transition-fast);
+      }
+      .trail-card:hover .trail-card__cta { transform: translateX(4px); }
+
+      @media (max-width: 680px) {
+        .trail-card { grid-template-columns: 1fr; }
+        .trail-card__cta { justify-self: start; }
+      }
+
+      /* ===== PROVENANCE LEDGER ===== */
+      .ledger-wrap {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-surface);
+        overflow-x: auto;
+      }
+      .ledger {
+        width: 100%;
+        min-width: 760px;
+        border-collapse: collapse;
+        font-family: var(--font-mono);
+        font-size: .78rem;
+      }
+      .ledger th, .ledger td {
+        padding: 1rem 1.15rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .ledger th {
+        font-weight: 500;
+        font-size: .68rem;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        color: var(--text-tertiary);
+        background: rgba(255,255,255,0.018);
+      }
+      .ledger td { color: var(--text-secondary); }
+      .ledger tr:last-child td { border-bottom: 0; }
+      .ledger tr:hover td { background: rgba(216, 181, 109, 0.04); color: var(--text-primary); }
+      .ledger__token { color: var(--brand-gold-soft); }
+      .ledger__addr {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        color: var(--text-secondary);
+      }
+      .ledger__arrow { color: var(--brand-gold); }
+      .ledger__verify {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        margin-top: var(--space-md);
+        padding-inline: .15rem;
+        font-family: var(--font-mono);
+        font-size: .72rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--brand-gold);
+      }
+      .ledger__verify:hover { color: var(--brand-gold-soft); }
+      .ledger__verify-arrow { transition: transform var(--transition-fast); display: inline-block; }
+      .ledger__verify:hover .ledger__verify-arrow { transform: translate(2px, -2px); }
+
+      /* ===== MOVEMENT MAP ===== */
+      .movement {
+        display: grid;
+        gap: var(--space-md);
+      }
+      .map-wrap {
+        position: relative;
+        padding: var(--space-lg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background:
+          radial-gradient(ellipse at center, rgba(216, 181, 109, 0.04), transparent 70%),
+          var(--bg-surface);
+        overflow: hidden;
+      }
+      .map-wrap svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .map-region {
+        fill: none;
+        stroke: var(--glass-border-strong);
+        stroke-width: 1.2;
+        stroke-linejoin: round;
+      }
+      .map-dot {
+        fill: var(--brand-gold);
+        filter: drop-shadow(0 0 6px rgba(216, 181, 109, 0.7));
+        transition: r var(--transition-fast), filter var(--transition-fast);
+        cursor: pointer;
+      }
+      .map-dot:hover {
+        filter: drop-shadow(0 0 12px var(--brand-gold-soft));
+      }
+      .map-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        font-family: var(--font-mono);
+        font-size: .7rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--text-tertiary);
+      }
+      .map-legend strong { color: var(--brand-gold); font-weight: 500; }
+      .map-legend__dot {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--brand-gold);
+        box-shadow: 0 0 8px var(--brand-gold);
+        margin-right: .5rem;
+        vertical-align: middle;
+      }
+
+      /* ===== WAITLIST ===== */
+      .waitlist {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+        padding: var(--space-xl);
+        border: 1px solid var(--border-glow);
+        border-radius: 16px;
+        background:
+          radial-gradient(circle at 0% 0%, rgba(216, 181, 109, 0.08), transparent 50%),
+          var(--bg-surface);
+      }
+      @media (min-width: 860px) {
+        .waitlist { grid-template-columns: 1.1fr 1fr; align-items: center; gap: var(--space-2xl); }
+      }
+      .waitlist__title {
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        line-height: 1.15;
+        margin-bottom: .8rem;
+      }
+      .waitlist__sub { color: var(--text-secondary); }
+      .waitlist__form {
+        display: grid;
+        gap: var(--space-sm);
+      }
+      .waitlist__row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: .5rem;
+        padding: .35rem;
+        border: 1px solid var(--glass-border-strong);
+        border-radius: 999px;
+        background: rgba(0,0,0,0.35);
+        transition: border-color var(--transition-fast);
+      }
+      .waitlist__row:focus-within { border-color: var(--brand-gold); }
+      .waitlist__input {
+        background: transparent;
+        border: 0;
+        outline: none;
+        padding: .85rem 1.15rem;
+        font-family: var(--font-body);
+        font-size: .95rem;
+        color: var(--text-primary);
+      }
+      .waitlist__input::placeholder { color: var(--text-tertiary); }
+      .waitlist__submit {
+        padding: .85rem 1.4rem;
+        border-radius: 999px;
+        background: var(--brand-gold);
+        color: #1a1409;
+        font-family: var(--font-mono);
+        font-size: .72rem;
+        font-weight: 600;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        transition: background var(--transition-fast), transform var(--transition-fast);
+      }
+      .waitlist__submit:hover { background: var(--brand-gold-soft); transform: translateY(-1px); }
+      .waitlist__privacy {
+        font-family: var(--font-mono);
+        font-size: .66rem;
+        letter-spacing: .12em;
+        color: var(--text-tertiary);
+        text-transform: uppercase;
+      }
+      .waitlist__success {
+        font-family: var(--font-mono);
+        font-size: .8rem;
+        letter-spacing: .12em;
+        color: var(--brand-gold-soft);
+      }
+
+      /* ===== FOOTER ===== */
+      .site-footer {
+        border-top: 1px solid var(--border);
+        margin-top: var(--space-2xl);
+        padding-block: var(--space-xl) var(--space-lg);
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: var(--space-xl);
+        margin-bottom: var(--space-xl);
+      }
+      @media (max-width: 860px) {
+        .footer-grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 520px) {
+        .footer-grid { grid-template-columns: 1fr; }
+      }
+      .footer-brand p { max-width: 38ch; margin-top: .8rem; font-size: .92rem; }
+      .footer-col h4 {
+        font-family: var(--font-mono);
+        font-size: .68rem;
+        font-weight: 500;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+        color: var(--text-tertiary);
+        margin-bottom: 1rem;
+      }
+      .footer-col ul { list-style: none; display: grid; gap: .7rem; }
+      .footer-col a {
+        font-size: .92rem;
+        color: var(--text-secondary);
+        transition: color var(--transition-fast);
+      }
+      .footer-col a:hover { color: var(--brand-gold); }
+      .footer-bar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: var(--space-sm);
+        padding-top: var(--space-md);
+        border-top: 1px solid var(--border);
+        font-family: var(--font-mono);
+        font-size: .68rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--text-tertiary);
+      }
+      .footer-bar__preview {
+        color: var(--brand-gold-soft);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" aria-label="Footprints header">
+    <div class="container header-inner">
+      <a class="back-link" href="./index.html" aria-label="Back to gateway">
+        <span class="back-link__arrow" aria-hidden="true">←</span>
+        <span class="back-link__label">Gateway</span>
+      </a>
+
+      <nav class="header-nav" aria-label="Footprints sections">
+        <a href="#pillars">Pillars</a>
+        <a href="#trails">Trails</a>
+        <a href="#provenance">Provenance</a>
+        <a href="#movement">Movement</a>
+        <a href="#waitlist">Waitlist</a>
+      </nav>
+
+      <span class="status-pill" aria-label="Preview status">Preview · 03</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="container hero" aria-labelledby="hero-title">
+      <span class="hero__eyebrow">Trails Layer · 03 · Preview</span>
+      <h1 class="hero__title" id="hero-title">
+        Trails of the
+        <span>next layer.</span>
+      </h1>
+      <p class="hero__sub">Footprints is where journeys, provenance, and movement live. Walk curated cultural trails through the £T€R₦AL ecosystem, follow on-chain paths of authorship and ownership, and watch the creator atlas grow node by node. Currently in active preview — content is illustrative.</p>
+      <div class="hero__cta-row">
+        <a class="btn btn--primary" href="#waitlist">
+          Join the waitlist <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--ghost" href="#pillars">
+          Explore the layer <span class="btn__arrow" aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ PILLARS ============ -->
+    <section class="container" id="pillars" aria-labelledby="pillars-title">
+      <header class="section-head">
+        <span class="section-head__eyebrow">The Three Pillars</span>
+        <h2 class="section-head__title" id="pillars-title">Three ways the layer remembers.</h2>
+        <p class="section-head__sub">Footprints is built on three structural ideas. Each answers a different question about how culture travels through the £T€R₦AL ecosystem.</p>
+      </header>
+
+      <div class="pillars">
+        <article class="pillar-card">
+          <div class="pillar-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="6" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>
+              <path d="M7.5 7.5l3 3M13.5 13.5l3 3"/>
+            </svg>
+          </div>
+          <span class="pillar-card__num">01 / Curated</span>
+          <h3 class="pillar-card__title">Cultural Trails</h3>
+          <p class="pillar-card__desc">Multi-stop journeys through artists, exhibitions, drops, and movements. A trail is an ordered sequence a visitor walks through — like a guided museum route, only the museum is the metaverse.</p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6h16M4 12h16M4 18h16"/>
+              <circle cx="8" cy="6" r="1.5" fill="currentColor"/>
+              <circle cx="15" cy="12" r="1.5" fill="currentColor"/>
+              <circle cx="11" cy="18" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <span class="pillar-card__num">02 / Verifiable</span>
+          <h3 class="pillar-card__title">Provenance Paths</h3>
+          <p class="pillar-card__desc">On-chain ownership and transfer histories rendered as a clean ledger. Every Footprints item carries a verifiable path — who made it, who held it, who holds it now, and which trail it belongs to.</p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+            </svg>
+          </div>
+          <span class="pillar-card__num">03 / Distributed</span>
+          <h3 class="pillar-card__title">Creator Movement</h3>
+          <p class="pillar-card__desc">A living atlas of where the work is being made. Static dots on a quiet map — each one a creator contributing to the ecosystem, mapped to a region rather than a precise coordinate.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ TRAILS ============ -->
+    <section class="container" id="trails" aria-labelledby="trails-title">
+      <header class="section-head">
+        <span class="section-head__eyebrow">Trail Index</span>
+        <h2 class="section-head__title" id="trails-title">Four walks through the ecosystem.</h2>
+        <p class="section-head__sub">Each trail is a curated sequence of stops — exhibitions, drops, essays, listening rooms. Walk one start to finish, or drop in at any point. Preview trails are illustrative.</p>
+      </header>
+
+      <div class="trails">
+        <article class="trail-card">
+          <div class="trail-card__body">
+            <div class="trail-card__meta">
+              <span><strong>07</strong> Stops</span>
+              <span><strong>~45</strong> min</span>
+              <span>Curated by Hero One</span>
+            </div>
+            <h3 class="trail-card__title">Origins of the Stylized Mark</h3>
+            <p class="trail-card__synopsis">From the first £T€R₦AL sketches to the ®-registered brand: a walk through the typographic decisions that turned a blog into a platform.</p>
+          </div>
+          <span class="trail-card__cta">Walk the trail →</span>
+        </article>
+
+        <article class="trail-card">
+          <div class="trail-card__body">
+            <div class="trail-card__meta">
+              <span><strong>12</strong> Stops</span>
+              <span><strong>~80</strong> min</span>
+              <span>Editorial</span>
+            </div>
+            <h3 class="trail-card__title">Renaissance, Reimagined for Web3</h3>
+            <p class="trail-card__synopsis">Classical compositions reframed as NFTs, virtual gallery installations, and immersive audio rooms. A long-form arc through the W£₿3 Chronicles.</p>
+          </div>
+          <span class="trail-card__cta">Walk the trail →</span>
+        </article>
+
+        <article class="trail-card">
+          <div class="trail-card__body">
+            <div class="trail-card__meta">
+              <span><strong>05</strong> Stops</span>
+              <span><strong>~25</strong> min</span>
+              <span>Hub commerce</span>
+            </div>
+            <h3 class="trail-card__title">A Vendor's First Drop</h3>
+            <p class="trail-card__synopsis">From onboarding to first sale on £T€R₦AL Hub. Five stops covering listing, pricing tiers, audience signaling, and the post-drop ledger.</p>
+          </div>
+          <span class="trail-card__cta">Walk the trail →</span>
+        </article>
+
+        <article class="trail-card">
+          <div class="trail-card__body">
+            <div class="trail-card__meta">
+              <span><strong>09</strong> Stops</span>
+              <span><strong>~60</strong> min</span>
+              <span>Community</span>
+            </div>
+            <h3 class="trail-card__title">Voices from the Metaverse Diary</h3>
+            <p class="trail-card__synopsis">A walking interview series: nine creators on what they're building inside the £T€R₦AL ecosystem and why the trails matter.</p>
+          </div>
+          <span class="trail-card__cta">Walk the trail →</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ PROVENANCE LEDGER ============ -->
+    <section class="container" id="provenance" aria-labelledby="provenance-title">
+      <header class="section-head">
+        <span class="section-head__eyebrow">Provenance Strip</span>
+        <h2 class="section-head__title" id="provenance-title">Every footprint is verifiable.</h2>
+        <p class="section-head__sub">Recent transfers across the Footprints layer. Mock ledger for the preview — production ledger will read directly from on-chain events.</p>
+      </header>
+
+      <div class="ledger-wrap" role="region" aria-label="Provenance ledger" tabindex="0">
+        <table class="ledger">
+          <thead>
+            <tr>
+              <th scope="col">Token</th>
+              <th scope="col">From → To</th>
+              <th scope="col">Block</th>
+              <th scope="col">Timestamp</th>
+              <th scope="col">Trail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="ledger__token">£T#0142</td>
+              <td>
+                <span class="ledger__addr">0x4f3a…b1c9</span>
+                <span class="ledger__arrow">→</span>
+                <span class="ledger__addr">hero.eth</span>
+              </td>
+              <td>19,847,201</td>
+              <td>2026-05-27 09:14</td>
+              <td>Origins of the Mark</td>
+            </tr>
+            <tr>
+              <td class="ledger__token">W£₿#0078</td>
+              <td>
+                <span class="ledger__addr">mra.eth</span>
+                <span class="ledger__arrow">→</span>
+                <span class="ledger__addr">0x9c12…44ae</span>
+              </td>
+              <td>19,847,188</td>
+              <td>2026-05-27 08:51</td>
+              <td>Renaissance, Reimagined</td>
+            </tr>
+            <tr>
+              <td class="ledger__token">HUB#2304</td>
+              <td>
+                <span class="ledger__addr">0x77be…2208</span>
+                <span class="ledger__arrow">→</span>
+                <span class="ledger__addr">vendor.eth</span>
+              </td>
+              <td>19,847,103</td>
+              <td>2026-05-27 07:22</td>
+              <td>A Vendor's First Drop</td>
+            </tr>
+            <tr>
+              <td class="ledger__token">£T#0098</td>
+              <td>
+                <span class="ledger__addr">studio.eth</span>
+                <span class="ledger__arrow">→</span>
+                <span class="ledger__addr">0xab02…ff31</span>
+              </td>
+              <td>19,846,917</td>
+              <td>2026-05-26 23:48</td>
+              <td>Voices from the Diary</td>
+            </tr>
+            <tr>
+              <td class="ledger__token">W£₿#0205</td>
+              <td>
+                <span class="ledger__addr">0x1188…9d44</span>
+                <span class="ledger__arrow">→</span>
+                <span class="ledger__addr">curator.eth</span>
+              </td>
+              <td>19,846,802</td>
+              <td>2026-05-26 21:09</td>
+              <td>Renaissance, Reimagined</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a class="ledger__verify" href="#" aria-label="Verify on chain (placeholder)">
+        Verify on chain <span class="ledger__verify-arrow" aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+    <!-- ============ MOVEMENT MAP ============ -->
+    <section class="container movement" id="movement" aria-labelledby="movement-title">
+      <header class="section-head">
+        <span class="section-head__eyebrow">Creator Atlas</span>
+        <h2 class="section-head__title" id="movement-title">Where the work is being made.</h2>
+        <p class="section-head__sub">A static cartographic preview of creator distribution across the ecosystem. Each dot represents a region with active contributors — never a precise coordinate.</p>
+      </header>
+
+      <div class="map-wrap">
+        <svg viewBox="0 0 1000 500" role="img" aria-label="World map showing creator distribution dots">
+          <!-- Stylized continent silhouettes (simplified for wireframe) -->
+          <path class="map-region" d="M150,140 Q200,110 280,130 L320,170 L310,220 L270,260 L210,250 L170,210 Z"/>
+          <path class="map-region" d="M340,180 L420,160 L470,200 L460,260 L420,290 L370,280 L340,240 Z"/>
+          <path class="map-region" d="M180,290 L240,280 L260,330 L290,400 L240,440 L200,420 L170,360 Z"/>
+          <path class="map-region" d="M460,210 L540,200 L600,230 L660,250 L700,280 L680,330 L620,340 L560,320 L500,290 L470,260 Z"/>
+          <path class="map-region" d="M520,350 L580,360 L600,400 L560,440 L510,420 Z"/>
+          <path class="map-region" d="M730,180 L820,170 L870,200 L890,240 L860,280 L800,290 L740,250 Z"/>
+          <path class="map-region" d="M760,340 L830,330 L860,360 L850,400 L790,410 L750,380 Z"/>
+
+          <!-- Creator dots — each one a region with active contributors -->
+          <g>
+            <circle class="map-dot" cx="220" cy="180" r="5"><title>North America West · 18 creators</title></circle>
+            <circle class="map-dot" cx="280" cy="210" r="5"><title>North America East · 22 creators</title></circle>
+            <circle class="map-dot" cx="240" cy="360" r="4"><title>South America · 11 creators</title></circle>
+            <circle class="map-dot" cx="400" cy="210" r="6"><title>Western Europe · 28 creators</title></circle>
+            <circle class="map-dot" cx="440" cy="240" r="4"><title>Southern Europe · 9 creators</title></circle>
+            <circle class="map-dot" cx="430" cy="190" r="4"><title>Northern Europe · 7 creators</title></circle>
+            <circle class="map-dot" cx="540" cy="260" r="4"><title>Middle East · 8 creators</title></circle>
+            <circle class="map-dot" cx="580" cy="290" r="4"><title>North Africa · 6 creators</title></circle>
+            <circle class="map-dot" cx="540" cy="390" r="3"><title>Sub-Saharan Africa · 4 creators</title></circle>
+            <circle class="map-dot" cx="650" cy="280" r="5"><title>South Asia · 14 creators</title></circle>
+            <circle class="map-dot" cx="780" cy="220" r="6"><title>East Asia · 24 creators</title></circle>
+            <circle class="map-dot" cx="820" cy="240" r="4"><title>Southeast Asia · 9 creators</title></circle>
+            <circle class="map-dot" cx="800" cy="380" r="4"><title>Oceania · 7 creators</title></circle>
+            <circle class="map-dot" cx="380" cy="170" r="3"><title>British Isles · 6 creators</title></circle>
+          </g>
+        </svg>
+      </div>
+
+      <div class="map-legend">
+        <span><span class="map-legend__dot" aria-hidden="true"></span>Active contributor region</span>
+        <span><strong>173</strong> creators</span>
+        <span><strong>14</strong> regions</span>
+        <span>Static preview snapshot · 2026-05-27</span>
+      </div>
+    </section>
+
+    <!-- ============ WAITLIST ============ -->
+    <section class="container" id="waitlist" aria-labelledby="waitlist-title">
+      <div class="waitlist">
+        <div>
+          <h2 class="waitlist__title" id="waitlist-title">Be early to the trails.</h2>
+          <p class="waitlist__sub">Footprints is in active preview. Join the waitlist to walk the first production trails, verify on-chain provenance, and add your node to the creator atlas.</p>
+        </div>
+        <form class="waitlist__form" id="waitlist-form" data-eternal-waitlist data-segment="footprints" novalidate>
+          <label class="waitlist__row" for="waitlist-email">
+            <input
+              class="waitlist__input"
+              id="waitlist-email"
+              type="email"
+              required
+              placeholder="your@email.com"
+              autocomplete="email"
+              aria-label="Your email address"
+            >
+            <button class="waitlist__submit" type="submit">Request access</button>
+          </label>
+          <p class="waitlist__privacy" id="waitlist-privacy">No spam. One email when Footprints opens. Unsubscribe anytime.</p>
+          <p class="waitlist__success" id="waitlist-success" hidden>✦ You're on the list.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand-mark">
+            <span class="brand-mark__dot" aria-hidden="true"></span>
+            Footprints
+          </span>
+          <p>The trails layer of the £T€R₦AL W£₿3 ART ¢HRO₦ICL€$ ¢R£ATIO₦® ecosystem. Cultural trails, provenance paths, creator movement.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Layer</h4>
+          <ul>
+            <li><a href="#pillars">Pillars</a></li>
+            <li><a href="#trails">Trails</a></li>
+            <li><a href="#provenance">Provenance</a></li>
+            <li><a href="#movement">Movement</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Ecosystem</h4>
+          <ul>
+            <li><a href="./index.html">Gateway</a></li>
+            <li><a href="./hub.html">£T€R₦AL Hub</a></li>
+            <li><a href="./web3.html">W£₿3</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Licenses</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <span>© 2026 Millenial Renaissance Art Limited · eternalweb3.com</span>
+        <span class="footer-bar__preview">Footprints v0.1 · Preview · Illustrative content</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/supabase-client.js"></script>
+  <script src="./js/waitlist.js"></script>
+</body>
+</html>
