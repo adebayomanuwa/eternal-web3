@@ -1,0 +1,28 @@
+/* ============================================================
+   £T€R₦AL HUB — _responsive.css
+   Breakpoint orchestration for any component that didn't get
+   its responsive rules inline above. Loaded last so it can
+   override without specificity wars.
+
+   Breakpoints used across the system:
+     640px  — mobile-to-tablet transition (filter bar, vendor grid)
+     768px  — tablet (nav show, footer grid, grids unlock)
+     1024px — desktop (hero grid, vendor grid 4-col, nav CTA)
+
+   Depends on all other partials.
+   System: Eternal Noir · v1.0
+   ============================================================ */
+
+/* Anything needing a global breakpoint override goes here.
+   Component-specific responsive rules live in their own partial.
+   Keep this file lean — it is the last word. */
+
+/* ─── UTILITY RESPONSIVE HELPERS ─── */
+
+@media (min-width: 768px) {
+  .hide-desktop { display: none !important; }
+}
+
+@media (max-width: 767px) {
+  .hide-mobile { display: none !important; }
+}

@@ -1,0 +1,45 @@
+/* ============================================================
+   £T€R₦AL HUB — _glass.css
+   Glassmorphism system. Composable utility classes and the
+   reusable glass-card component.
+   Depends on _tokens.css.
+   System: Eternal Noir · v1.0
+   ============================================================ */
+
+/* ─── BASE GLASS UTILITIES ─── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(140%);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-strong {
+  background: var(--glass-bg-hover);
+  backdrop-filter: blur(var(--blur-lg)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(160%);
+  border: 1px solid var(--glass-border);
+}
+
+/* ─── GLASS CARD COMPONENT ─── */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(140%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  transition:
+    border-color var(--duration-instant) var(--ease-out-quart),
+    box-shadow   var(--duration-fast)    var(--ease-out-quart),
+    transform    var(--duration-fast)    var(--ease-out-quart);
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow:
+    0 0 0 1px var(--glass-border-hover),
+    0 20px 40px -10px rgba(0, 0, 0, 0.5),
+    0 0 60px -20px var(--neon-cyan-dim);
+  transform: translateY(-2px);
+}

@@ -1,0 +1,89 @@
+/* ============================================================
+   £T€R₦AL HUB — _animations.css
+   All @keyframes, scroll-reveal data-attribute system,
+   text-line reveal, and reduced-motion safety net.
+   Depends on _tokens.css.
+   System: Eternal Noir · v1.0
+   ============================================================ */
+
+/* ─── KEYFRAMES ─── */
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -50px) scale(1.1); }
+  66%       { transform: translate(-20px, 30px) scale(0.9); }
+}
+
+@keyframes signalPulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--neon-cyan-dim); }
+  50%       { box-shadow: 0 0 20px 5px var(--neon-cyan-dim); }
+}
+
+@keyframes dotBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ─── SCROLL REVEAL — CSS STATES ─── */
+/* JS partner: eternal-hub.js § 3. SCROLL REVEAL */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity   var(--duration-normal) var(--ease-out-expo),
+    transform var(--duration-normal) var(--ease-out-expo);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children — up to 6 items */
+[data-reveal="stagger"] > *:nth-child(1) { transition-delay:   0ms; }
+[data-reveal="stagger"] > *:nth-child(2) { transition-delay: 100ms; }
+[data-reveal="stagger"] > *:nth-child(3) { transition-delay: 200ms; }
+[data-reveal="stagger"] > *:nth-child(4) { transition-delay: 300ms; }
+[data-reveal="stagger"] > *:nth-child(5) { transition-delay: 400ms; }
+[data-reveal="stagger"] > *:nth-child(6) { transition-delay: 500ms; }
+
+/* ─── TEXT LINE REVEAL ─── */
+/* Wrap hero headline words in .reveal-line > .reveal-line__inner */
+
+.reveal-line {
+  display: block;
+  overflow: hidden;
+}
+
+.reveal-line__inner {
+  display: block;
+  transform: translateY(100%);
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.is-revealed .reveal-line__inner {
+  transform: translateY(0);
+}
+
+/* ─── REDUCED MOTION — GLOBAL SAFETY NET ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Instant-reveal all scroll-reveal elements */
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Hide ambient orbs entirely */
+  .orb {
+    display: none;
+  }
+}

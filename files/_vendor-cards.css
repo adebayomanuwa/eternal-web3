@@ -1,0 +1,182 @@
+/* ============================================================
+   £T€R₦AL HUB — _vendor-cards.css
+   Vendor card grid and all card sub-components.
+   Data attributes for JS filtering: data-name, data-category,
+   data-location. See eternal-hub.js § 4.
+   Depends on _tokens.css.
+   System: Eternal Noir · v1.0
+   ============================================================ */
+
+/* ─── VENDOR GRID ─── */
+
+.vendor-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 640px) {
+  .vendor-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .vendor-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ─── VENDOR CARD ─── */
+
+.vendor-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    transform   var(--duration-fast) var(--ease-out-quart),
+    box-shadow  var(--duration-fast) var(--ease-out-quart);
+}
+
+.vendor-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px var(--glass-border-hover),
+    0 0 80px -20px var(--neon-cyan-dim);
+}
+
+/* ─── CARD MEDIA (coloured gradient header) ─── */
+
+.vendor-card__media {
+  height: 140px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.vendor-card__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+}
+
+/* Four colour-theme variants */
+.vendor-card__media--1 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+.vendor-card__media--1::after { background: linear-gradient(135deg, var(--neon-cyan-dim), transparent); }
+
+.vendor-card__media--2 { background: linear-gradient(135deg, #2e1a2e, #3e162e); }
+.vendor-card__media--2::after { background: linear-gradient(135deg, var(--neon-magenta-dim), transparent); }
+
+.vendor-card__media--3 { background: linear-gradient(135deg, #1a2e1a, #163e16); }
+.vendor-card__media--3::after { background: linear-gradient(135deg, rgba(0, 255, 150, 0.1), transparent); }
+
+.vendor-card__media--4 { background: linear-gradient(135deg, #2e2a1a, #3e3e16); }
+.vendor-card__media--4::after { background: linear-gradient(135deg, var(--lux-gold-dim), transparent); }
+
+/* ─── CARD CONTENT ─── */
+
+.vendor-card__content {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  flex: 1;
+}
+
+.vendor-card__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.vendor-card__name {
+  font-size: var(--text-h3);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.vendor-card__desc {
+  font-size: var(--text-small);
+  color: var(--text-tertiary);
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* ─── CARD BADGES ─── */
+
+.vendor-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3xs);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3xs) var(--space-2xs);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  border: 1px solid;
+}
+
+.badge--cyan {
+  color: var(--neon-cyan);
+  background: var(--neon-cyan-dim);
+  border-color: rgba(0, 240, 255, 0.2);
+}
+
+.badge--magenta {
+  color: var(--neon-magenta);
+  background: var(--neon-magenta-dim);
+  border-color: rgba(255, 0, 110, 0.2);
+}
+
+.badge--gold {
+  color: var(--lux-gold);
+  background: var(--lux-gold-dim);
+  border-color: rgba(255, 215, 0, 0.2);
+}
+
+.badge--neutral {
+  color: var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--glass-border);
+}
+
+/* ─── CARD CTA LINK ─── */
+
+.vendor-card__link {
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--neon-cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  transition: gap var(--duration-instant);
+  margin-top: auto;
+}
+
+.vendor-card__link:hover {
+  gap: var(--space-xs);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.vendor-card__link::after {
+  content: '→';
+  transition: transform var(--duration-instant);
+}
+
+.vendor-card__link:hover::after {
+  transform: translateX(3px);
+}

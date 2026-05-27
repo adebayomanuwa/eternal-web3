@@ -1,0 +1,35 @@
+/* ============================================================
+   £T€R₦AL HUB — _utilities.css
+   Minimal helper classes. No layout, no components.
+   Every utility here must have a single, clear purpose.
+   Depends on _tokens.css.
+   System: Eternal Noir · v1.0
+   ============================================================ */
+
+/* ─── SCREEN-READER ONLY ─── */
+/* Hides visually but keeps accessible to assistive tech */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── TEXT UTILITIES ─── */
+.text-primary   { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary  { color: var(--text-tertiary); }
+.text-muted     { color: var(--text-muted); }
+.text-cyan      { color: var(--neon-cyan); }
+.text-magenta   { color: var(--neon-magenta); }
+.text-gold      { color: var(--lux-gold); }
+.text-mono      { font-family: var(--font-mono); }
+.text-upper     { text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ─── DISPLAY ─── */
+.visually-hidden { visibility: hidden; }

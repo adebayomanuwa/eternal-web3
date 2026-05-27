@@ -1,0 +1,112 @@
+/* ============================================================
+   £T€R₦AL HUB — _layout.css
+   Container, grid systems, section spacing primitives.
+   Depends on _tokens.css.
+   System: Eternal Noir · v1.0
+   ============================================================ */
+
+/* ─── CONTAINER ─── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--space-xl);
+  }
+}
+
+/* ─── SECTION PRIMITIVES ─── */
+.section {
+  position: relative;
+  padding-block: var(--space-3xl);
+}
+
+.section--hero {
+  padding-block: var(--space-4xl) var(--space-3xl);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+}
+
+.section--compact {
+  padding-block: var(--space-2xl);
+}
+
+.section__header {
+  max-width: 640px;
+  margin-bottom: var(--space-2xl);
+}
+
+.section__header--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--neon-cyan);
+  margin-bottom: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.section__eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--neon-cyan);
+}
+
+.section__title {
+  font-size: var(--text-h1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+
+.section__desc {
+  font-size: var(--text-body);
+  color: var(--text-tertiary);
+  line-height: 1.7;
+}
+
+/* ─── GRID SYSTEMS ─── */
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-lg);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}

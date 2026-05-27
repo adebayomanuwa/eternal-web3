@@ -1,0 +1,84 @@
+/* ============================================================
+   £T€R₦AL HUB — _footer.css
+   Footer layout: 4-column grid (brand, Platform, Legal,
+   Connect), bottom bar.
+   Depends on _tokens.css.
+   System: Eternal Noir · v1.0
+   ============================================================ */
+
+.footer {
+  border-top: 1px solid var(--glass-border);
+  padding-block: var(--space-2xl);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+@media (min-width: 768px) {
+  .footer__grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.footer__brand p {
+  font-size: var(--text-small);
+  color: var(--text-muted);
+  max-width: 280px;
+}
+
+.footer__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.footer__links a {
+  font-size: var(--text-small);
+  color: var(--text-tertiary);
+  display: inline-block;
+  transition:
+    color      var(--duration-instant),
+    transform  var(--duration-instant);
+}
+
+.footer__links a:hover {
+  color: var(--neon-cyan);
+  transform: translateX(2px);
+}
+
+.footer__bottom {
+  border-top: 1px solid var(--glass-border);
+  padding-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .footer__bottom { flex-direction: row; }
+}
+
+.footer__bottom p {
+  font-size: var(--text-micro);
+  color: var(--text-muted);
+}

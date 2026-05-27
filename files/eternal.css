@@ -1,0 +1,41 @@
+/* ============================================================
+   £T€R₦AL HUB — eternal.css
+   Single aggregator file. Import order = cascade order.
+   This is the only file referenced in hub.html <link>.
+   Critical-CSS note: _tokens, _reset, _base, _layout, _hero
+   should be inlined in <head> for first paint (see §3.2 of
+   design system). Everything else loads via this file.
+
+   System: Eternal Noir · v1.0
+   Maintainer: Millenial Renaissance Art Limited
+   ============================================================ */
+
+/* 1. Foundation — must come first */
+@import '_tokens.css';
+@import '_reset.css';
+@import '_base.css';
+@import '_typography.css';
+
+/* 2. Layout primitives */
+@import '_layout.css';
+
+/* 3. Motion — keyframes before components that use them */
+@import '_animations.css';
+
+/* 4. Visual systems */
+@import '_glass.css';
+
+/* 5. Components */
+@import '_components.css';
+@import '_vendor-cards.css';
+
+/* 6. Page sections */
+@import '_header.css';
+@import '_hero.css';
+@import '_footer.css';
+
+/* 7. Helpers */
+@import '_utilities.css';
+
+/* 8. Breakpoint orchestration — always last */
+@import '_responsive.css';

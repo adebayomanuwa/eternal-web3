@@ -1,0 +1,49 @@
+/* ============================================================
+   £T€R₦AL HUB — _base.css
+   Element-level styles: body, headings, focus, scrollbar,
+   text selection. Depends on _tokens.css.
+   System: Eternal Noir · v1.0
+   ============================================================ */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  background: var(--void-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+}
+
+/* ─── FOCUS ─── */
+:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 3px;
+}
+
+/* ─── TEXT SELECTION ─── */
+::selection {
+  background: var(--neon-cyan-dim);
+  color: var(--text-primary);
+}
+
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--void-900);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--void-500);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--void-400);
+}
