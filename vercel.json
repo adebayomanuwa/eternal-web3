@@ -1,0 +1,46 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "web3.eternalweb3.com"
+        }
+      ],
+      "destination": "/web3.html"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "hub.eternalweb3.com"
+        }
+      ],
+      "destination": "/hub.html"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "footprints.eternalweb3.com"
+        }
+      ],
+      "destination": "/footprints.html"
+    },
+    {
+      "source": "/web3",
+      "destination": "/web3.html"
+    },
+    {
+      "source": "/hub",
+      "destination": "/hub.html"
+    },
+    {
+      "source": "/footprints",
+      "destination": "/footprints.html"
+    }
+  ]
+}
